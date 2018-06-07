@@ -3,9 +3,9 @@ import pytest
 from hello_world import app
 
 
-@pytest.fixture()
+"""@pytest.fixture()
 def apigw_event():
-    """ Generates API GW Event"""
+    #Generates API GW Event
 
     return {
         "body": "{ \"test\": \"body\"}",
@@ -81,12 +81,238 @@ def apigw_event():
             "baz": "qux"
         },
         "path": "/examplepath"
+    }"""
+
+@pytest.fixture()
+def event1():
+    return {
+        "Namespace": "theNamespace",
+        "MetricName": "theMetricName",
+        "Dimensions": [
+            {
+                "Name": "theName1",
+                "Value": "theValue1"
+            },
+            {
+                "Name": "theName2",
+                "Value": "theValue2"
+            }
+        ],
+        "Timestamp": 1528236844480,
+        "Value": 12.17,
+        "StatisticValues": {
+            "SampleCount": 12.17,
+            "Sum": 12.17,
+            "Minimum": 12.17,
+            "Maximum": 12.17
+        },
+        "Unit": "Seconds",
+        "StorageResolution": 12
     }
 
+@pytest.fixture()
+def event2():
+    return {
+        "Namespace": "basicNamespace",
+        "MetricName": "basicMetricName"
+    }
 
-def test_lambda_handler(apigw_event):
+@pytest.fixture()
+def event3():
+    return {
+        "Namespace": "",
+        "MetricName": "theMetricName",
+        "Dimensions": [
+            {
+                "Name": "theName1",
+                "Value": "theValue1"
+            },
+            {
+                "Name": "theName2",
+                "Value": "theValue2"
+            }
+        ],
+        "Timestamp": 1528236844480,
+        "Value": 12.17,
+        "StatisticValues": {
+            "SampleCount": 12.17,
+            "Sum": 12.17,
+            "Minimum": 12.17,
+            "Maximum": 12.17
+        },
+        "Unit": "Seconds",
+        "StorageResolution": 12
+    }
 
-    ret = app.lambda_handler(apigw_event, "")
+@pytest.fixture()
+def event4():
+    return {
+        "Namespace": "theNamespace",
+        "MetricName": "",
+        "Dimensions": [
+            {
+                "Name": "theName1",
+                "Value": "theValue1"
+            },
+            {
+                "Name": "theName2",
+                "Value": "theValue2"
+            }
+        ],
+        "Timestamp": 1528236844480,
+        "Value": 12.17,
+        "StatisticValues": {
+            "SampleCount": 12.17,
+            "Sum": 12.17,
+            "Minimum": 12.17,
+            "Maximum": 12.17
+        },
+        "Unit": "Seconds",
+        "StorageResolution": 12
+    }
+
+@pytest.fixture()
+def event5():
+    return {
+        "Namespace": "theNamespace",
+        "MetricName": "theMetricName",
+        "Dimensions": [
+            {
+                "Name": "",
+                "Value": "theValue"
+            }
+        ],
+        "Timestamp": 1528236844480,
+        "Value": 12.17,
+        "StatisticValues": {
+            "SampleCount": 12.17,
+            "Sum": 12.17,
+            "Minimum": 12.17,
+            "Maximum": 12.17
+        },
+        "Unit": "Seconds",
+        "StorageResolution": 12
+    }
+
+@pytest.fixture()
+def event6():
+    return {
+        "Namespace": "theNamespace",
+        "MetricName": "theMetricName",
+        "Dimensions": [
+            {
+                "Name": "theName",
+                "Value": ""
+            }
+        ],
+        "Timestamp": 1528236844480,
+        "Value": 12.17,
+        "StatisticValues": {
+            "SampleCount": 12.17,
+            "Sum": 12.17,
+            "Minimum": 12.17,
+            "Maximum": 12.17
+        },
+        "Unit": "Seconds",
+        "StorageResolution": 12
+    }
+
+@pytest.fixture()
+def event7():
+    return {
+        "Namespace": "theNamespace",
+        "MetricName": "theMetricName",
+        "Dimensions": [
+            {
+                "Name": "theName",
+                "Value": "theValue"
+            }
+        ],
+        "Timestamp": "Fake time stamp",
+        "Value": 12.17,
+        "StatisticValues": {
+            "SampleCount": 12.17,
+            "Sum": 12.17,
+            "Minimum": 12.17,
+            "Maximum": 12.17
+        },
+        "Unit": "Seconds",
+        "StorageResolution": 12
+    }
+
+@pytest.fixture()
+def event8():
+    return {
+        "Namespace": "theNamespace",
+        "MetricName": "theMetricName",
+        "Dimensions": [
+            {
+                "Name": "theName",
+                "Value": "theValue"
+            }
+        ],
+        "Timestamp": "1528319852774",
+        "Value": "Fake Value",
+        "StatisticValues": {
+            "SampleCount": 12.17,
+            "Sum": 12.17,
+            "Minimum": 12.17,
+            "Maximum": 12.17
+        },
+        "Unit": "Seconds",
+        "StorageResolution": 12
+    }
+
+@pytest.fixture()
+def event9():
+    return {
+        "Namespace": "theNamespace",
+        "MetricName": "theMetricName",
+        "Dimensions": [
+            {
+                "Name": "theName",
+                "Value": "theValue"
+            }
+        ],
+        "Timestamp": "1528319852774",
+        "Value": 12.17,
+        "StatisticValues": {
+            "SampleCount": 12.17,
+            "Sum": 12.17,
+            "Minimum": 12.18,
+            "Maximum": 12.17
+        },
+        "Unit": "Seconds",
+        "StorageResolution": 12
+    }
+
+@pytest.fixture()
+def event10():
+    return {
+        "Namespace": "theNamespace",
+        "MetricName": "theMetricName",
+        "Dimensions": [
+            {
+                "Name": "theName",
+                "Value": "theValue"
+            }
+        ],
+        "Timestamp": "1528319852774",
+        "Value": 12.17,
+        "StatisticValues": {
+            "SampleCount": 12.17,
+            "Sum": 12.17,
+            "Minimum": 12.17,
+            "Maximum": 12.17
+        },
+        "Unit": "seconds",
+        "StorageResolution": 12
+    }
+
+"""
+def test_lambda_handler_provided(apigw_event):
+
+    ret = app.lambda_handler_provided(apigw_event, "")
     assert ret['statusCode'] == 200
 
     for key in ('message', 'location'):
@@ -94,3 +320,44 @@ def test_lambda_handler(apigw_event):
 
     data = json.loads(ret['body'])
     assert data['message'] == 'hello world'
+"""
+
+def test_lambda_handler1(event1):
+    ret = app.lambda_handler(event1, "")
+    assert ret == "Function executed through to completion."
+
+def test_lambda_handler2(event2):
+    ret = app.lambda_handler(event2, "")
+    assert ret == "Function executed through to completion."
+
+def test_lambda_handler3(event3):
+    ret = app.lambda_handler(event3, "")
+    assert ret == "Invalid Namespace"
+
+def test_lambda_handler4(event4):
+    ret = app.lambda_handler(event4, "")
+    assert ret == "Invalid MetricName"
+
+def test_lambda_handler5(event5):
+    ret = app.lambda_handler(event5, "")
+    assert ret == "Invalid Dimension Name"
+
+def test_lambda_handler6(event6):
+    ret = app.lambda_handler(event6, "")
+    assert ret == "Invalid Dimension Value"
+
+def test_lambda_handler7(event7):
+    ret = app.lambda_handler(event7, "")
+    assert ret == "Timestamp must be an integer (epoch format)."
+
+def test_lambda_handler8(event8):
+    ret = app.lambda_handler(event8, "")
+    assert ret == "Value type must be float."
+
+def test_lambda_handler9(event9):
+    ret = app.lambda_handler(event9, "")
+    assert ret == "Minimum cannot be greater than Maximum."
+
+def test_lambda_handler10(event10):
+    ret = app.lambda_handler(event10, "")
+    assert ret == "Unit type not available"
