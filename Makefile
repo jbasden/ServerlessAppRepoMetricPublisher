@@ -9,7 +9,7 @@ BUILD_DIR := dist
 PACKAGE_BUCKET ?= <bucket>
 
 # user can optionally override these with env vars
-STACK_NAME ?= app-stack
+STACK_NAME ?= metricpublisher-stack
 AWS_DEFAULT_REGION ?= us-east-1
 
 PYTHON := $(shell /usr/bin/which python$(PY_VERSION))
@@ -26,8 +26,8 @@ dev-deps: init
 	pipenv sync --dev
 
 compile: dev-deps
-	pipenv run pydocstyle app
-	pipenv run flake8 app
+	pipenv run pydocstyle metricpublisher
+	pipenv run flake8 metricpublisher
 
 test: compile
 	python -m pytest test/ -v
@@ -35,7 +35,7 @@ build: test
 
 package: build
 	mkdir -p $(BUILD_DIR)
-	cp -r template.yaml app $(BUILD_DIR)
+	cp -r template.yaml metricpublisher $(BUILD_DIR)
 
 	# package dependencies in lib dir
 	pipenv lock --requirements > $(BUILD_DIR)/requirements.txt
