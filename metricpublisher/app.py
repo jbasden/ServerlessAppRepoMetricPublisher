@@ -1,10 +1,11 @@
+"""temporary docstring."""
 import json
 
 import requests
 
 
 def lambda_handler(event, context):
-    """Sample pure Lambda function
+    """Sample pure Lambda function.
 
     Arguments:
         event LambdaEvent -- Lambda Event received from Invoke API
@@ -12,8 +13,8 @@ def lambda_handler(event, context):
 
     Returns:
         dict -- {'statusCode': int, 'body': dict}
-    """
 
+    """
     ip = requests.get('http://checkip.amazonaws.com/')
 
     return {
