@@ -92,7 +92,28 @@
         }
     },
     "required": [
-        "Namespace",
         "MetricName"
+    ],
+    "oneOf": [
+        {
+            "required": [
+                "Value"
+            ],
+            "not": {
+                "required": [
+                    "StatisticValues"
+                ]
+            }
+        },
+        {
+            "required": [
+                "StatisticValues"
+            ],
+            "not": {
+                "required": [
+                    "Value"
+                ]
+            }
+        }
     ]
 }
