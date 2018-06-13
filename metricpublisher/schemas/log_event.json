@@ -1,12 +1,14 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Schema for the log_event lambda request object",
-  "type": "object",
-  "properties": {
-    "request_id": {"type": "number"},
-    "metric_data": {
-      "type": "array",
-      "$ref": "metric_datum.json"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Schema for the log_event lambda request object",
+    "type": "object",
+    "properties": {
+        "request_id": {
+            "type": "number"
+        },
+        "metric_data": {
+            "type": "array",
+            "$ref": "metric_datum.json"
+        }
     }
-  }
 }
