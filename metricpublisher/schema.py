@@ -1,7 +1,6 @@
 """Helpers for schema validation."""
 
 import os.path as path
-
 import jsonref
 import jsonschema
 

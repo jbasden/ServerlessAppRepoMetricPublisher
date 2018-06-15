@@ -1,96 +1,65 @@
 import json
 import pytest
-from metricpublisher import app
+import events
+from jsonschema import ValidationError
+import metricpublisher.schema
+import metricpublisher.lambda_handler
 
+def test_standard_valid_input():
+    data = events.standard_valid_input()
+    assert metricpublisher.schema._validate(data,"log_event.json") == None
 
-@pytest.fixture()
-def apigw_event():
-    """ Generates API GW Event"""
+def test_basic_valid_input():
+    data = events.basic_valid_input()
+    assert metricpublisher.schema._validate(data,"log_event.json") == None
 
-    return {
-        "body": "{ \"test\": \"body\"}",
-        "resource": "/{proxy+}",
-        "requestContext": {
-            "resourceId": "123456",
-            "apiId": "1234567890",
-            "resourcePath": "/{proxy+}",
-            "httpMethod": "POST",
-            "requestId": "c6af9ac6-7b61-11e6-9a41-93e8deadbeef",
-            "accountId": "123456789012",
-            "identity": {
-                "apiKey": "",
-                "userArn": "",
-                "cognitoAuthenticationType": "",
-                "caller": "",
-                "userAgent": "Custom User Agent String",
-                "user": "",
-                "cognitoIdentityPoolId": "",
-                "cognitoIdentityId": "",
-                "cognitoAuthenticationProvider": "",
-                "sourceIp": "127.0.0.1",
-                "accountId": ""
-            },
-            "stage": "prod"
-        },
-        "queryStringParameters": {
-            "foo": "bar"
-        },
-        "headers": {
-            "Via":
-            "1.1 08f323deadbeefa7af34d5feb414ce27.cloudfront.net (CloudFront)",
-            "Accept-Language":
-            "en-US,en;q=0.8",
-            "CloudFront-Is-Desktop-Viewer":
-            "true",
-            "CloudFront-Is-SmartTV-Viewer":
-            "false",
-            "CloudFront-Is-Mobile-Viewer":
-            "false",
-            "X-Forwarded-For":
-            "127.0.0.1, 127.0.0.2",
-            "CloudFront-Viewer-Country":
-            "US",
-            "Accept":
-            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-            "Upgrade-Insecure-Requests":
-            "1",
-            "X-Forwarded-Port":
-            "443",
-            "Host":
-            "1234567890.execute-api.us-east-1.amazonaws.com",
-            "X-Forwarded-Proto":
-            "https",
-            "X-Amz-Cf-Id":
-            "aaaaaaaaaae3VYQb9jd-nvCd-de396Uhbp027Y2JvkCPNLmGJHqlaA==",
-            "CloudFront-Is-Tablet-Viewer":
-            "false",
-            "Cache-Control":
-            "max-age=0",
-            "User-Agent":
-            "Custom User Agent String",
-            "CloudFront-Forwarded-Proto":
-            "https",
-            "Accept-Encoding":
-            "gzip, deflate, sdch"
-        },
-        "pathParameters": {
-            "proxy": "/examplepath"
-        },
-        "httpMethod": "POST",
-        "stageVariables": {
-            "baz": "qux"
-        },
-        "path": "/examplepath"
-    }
+def test_multiple_metrics_input():
+    data = events.multiple_metrics_input()
+    assert metricpublisher.schema._validate(data,"log_event.json") == None
 
+def test_Value_and_Statistic_Values_both_included():
+    data = events.value_and_statistic_values_both_included()
+    _assert_error_response(
+        metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
+    )
 
-def test_lambda_handler(apigw_event):
+def test_missing_value_and_statistic_values():
+    data = events.missing_value_and_statistic_values()
+    _assert_error_response(
+        metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
+    )
 
-    ret = app.lambda_handler(apigw_event, "")
-    assert ret['statusCode'] == 200
+def test_missing_request_id():
+    data = events.missing_request_id()
+    _assert_error_response(
+        metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
+    )
 
-    for key in ('message', 'location'):
-        assert key in ret['body']
+def test_missing_metric_name():
+    data = events.missing_metric_name()
+    _assert_error_response(
+        metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
+    )
 
-    data = json.loads(ret['body'])
-    assert data['message'] == 'hello world'
+def test_StatisticValues_missing_Sum():
+    data = events.StatisticValues_missing_Sum()
+    _assert_error_response(
+        metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
+    )
+
+def test_Unit_type_not_available():
+    data = events.Unit_type_not_available()
+    _assert_error_response(
+        metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
+    )
+
+def test_StorageResolution_type_invalid():
+    data = events.StorageResolution_type_invalid()
+    _assert_error_response(
+        metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
+    )
+
+def _assert_error_response(result, error_type):
+    assert 'error' in result
+    assert 'type' in result['error']
+    assert result['error']['type'] == error_type
