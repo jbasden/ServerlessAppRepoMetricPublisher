@@ -1,6 +1,7 @@
 """Helpers for schema validation."""
 
 import os.path as path
+
 import jsonref
 import jsonschema
 
@@ -15,6 +16,7 @@ def validate_log_event_request(request):
 def _validate(data, schema_filename):
     """Validate data against given JSON schema file."""
     schema = _load_json_schema(schema_filename)
+    _load_json_schema("statistic_values.json")
     return jsonschema.validate(data, schema)
 
 

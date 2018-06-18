@@ -77,6 +77,7 @@ def test_dimension_type_invalid():
         metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
     )
 
+
 def _assert_error_response(result, error_type):
     """Helper function to assert that the correct type of error was thrown"""
     assert 'error' in result

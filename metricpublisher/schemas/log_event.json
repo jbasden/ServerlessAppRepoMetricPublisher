@@ -2,9 +2,94 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "Schema for the log_event lambda request object",
     "type": "object",
-    "properties": {
+    "definitions": {
         "request_id": {
             "type": "string"
+        },
+        "MetricName": {
+            "type": "string"
+        },
+        "Dimensions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "Name": {
+                        "type": "string"
+                    },
+                    "Value": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "Name",
+                    "Value"
+                ]
+            }
+        },
+        "Timestamp": {
+          "type":"number"
+        },
+        "Value": {
+            "type": "number"
+        },
+        "StatisticValues": {
+            "type": "object",
+            "properties": {
+                "SampleCount": {
+                    "type": "number"
+                },
+                "Sum": {
+                    "type": "number"
+                },
+                "Minimum": {
+                    "type": "number"
+                },
+                "Maximum": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "SampleCount",
+                "Sum",
+                "Minimum",
+                "Maximum"
+            ]
+        },
+        "Unit": {
+            "type": "string",
+            "enum": [
+                "Seconds",
+                "Microseconds",
+                "Milliseconds",
+                "Bytes",
+                "Kilobytes",
+                "Megabytes",
+                "Gigabytes",
+                "Terabytes",
+                "Bits",
+                "Kilobits",
+                "Megabits",
+                "Gigabits",
+                "Terabits",
+                "Percent",
+                "Count",
+                "Bytes/Second",
+                "Kilobytes/Second",
+                "Megabytes/Second",
+                "Gigabytes/Second",
+                "Terabytes/Second",
+                "Bits/Second",
+                "Kilobits/Second",
+                "Megabits/Second",
+                "Gigabits/Second",
+                "Terabits/Second",
+                "Count/Second",
+                "None"
+            ]
+        },
+        "StorageResolution": {
+            "type": "number"
         },
         "metric_data": {
             "type": "array",
@@ -12,86 +97,25 @@
                 "type": "object",
                 "properties": {
                     "MetricName": {
-                        "type": "string"
+                        "$ref": "#/definitions/MetricName"
                     },
                     "Dimensions": {
-                        "type": "array",
-                        "properties": {
-                            "Name": {
-                                "type": "string"
-                            },
-                            "Value": {
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "Name",
-                            "Value"
-                        ]
+                        "$ref": "#/definitions/Dimensions"
                     },
                     "Timestamp": {
-                        "type": "number"
+                      "$ref": "#/definitions/Timestamp"
                     },
                     "Value": {
-                        "type": "number"
+                      "$ref": "#/definitions/Value"
                     },
                     "StatisticValues": {
-                        "type": "object",
-                        "properties": {
-                            "SampleCount": {
-                                "type": "number"
-                            },
-                            "Sum": {
-                                "type": "number"
-                            },
-                            "Minimum": {
-                                "type": "number"
-                            },
-                            "Maximum": {
-                                "type": "number"
-                            }
-                        },
-                        "required": [
-                            "SampleCount",
-                            "Sum",
-                            "Minimum",
-                            "Maximum"
-                        ]
+                      "$ref": "#/definitions/StatisticValues"
                     },
                     "Unit": {
-                        "type": "string",
-                        "enum": [
-                            "Seconds",
-                            "Microseconds",
-                            "Milliseconds",
-                            "Bytes",
-                            "Kilobytes",
-                            "Megabytes",
-                            "Gigabytes",
-                            "Terabytes",
-                            "Bits",
-                            "Kilobits",
-                            "Megabits",
-                            "Gigabits",
-                            "Terabits",
-                            "Percent",
-                            "Count",
-                            "Bytes/Second",
-                            "Kilobytes/Second",
-                            "Megabytes/Second",
-                            "Gigabytes/Second",
-                            "Terabytes/Second",
-                            "Bits/Second",
-                            "Kilobits/Second",
-                            "Megabits/Second",
-                            "Gigabits/Second",
-                            "Terabits/Second",
-                            "Count/Second",
-                            "None"
-                        ]
+                      "$ref": "#/definitions/Unit"
                     },
                     "StorageResolution": {
-                        "type": "number"
+                      "$ref": "#/definitions/StorageResolution"
                     }
                 },
                 "required": [
@@ -120,6 +144,15 @@
                     }
                 ]
             }
+        }
+    },
+
+    "properties": {
+        "request_id": {
+            "$ref": "#/definitions/request_id"
+        },
+        "metric_data": {
+            "$ref": "#/definitions/metric_data"
         }
     },
     "required": [
