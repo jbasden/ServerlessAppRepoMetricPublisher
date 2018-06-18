@@ -311,3 +311,60 @@ def Dimension_type_invalid():
             }
         ]
     }
+
+@pytest.fixture()
+def Dimension_item_type_invalid():
+    return {
+        "request_id": "an id",
+        "metric_data": [
+            {
+                "MetricName": "theMetricName",
+                "Dimensions": [
+                    {
+                        "Name": "theName1",
+                        "Value": "theValue1"
+                    },
+                    "a string"
+                ],
+                "Timestamp": 1528236844480,
+                "StatisticValues": {
+                    "SampleCount": 12.17,
+                    "Sum": 12.17,
+                    "Minimum": 12.17,
+                    "Maximum": 12.17
+                },
+                "Unit": "Seconds",
+                "StorageResolution": 12
+            }
+        ]
+    }
+
+@pytest.fixture()
+def Dimension_item_wrong_property():
+    return {
+        "request_id": "an id",
+        "metric_data": [
+            {
+                "MetricName": "theMetricName",
+                "Dimensions": [
+                    {
+                        "Name": "theName1",
+                        "Value": "theValue1"
+                    },
+                    {
+                        "name": "theName2",
+                        "Value": "theValue2"
+                    }
+                ],
+                "Timestamp": 1528236844480,
+                "StatisticValues": {
+                    "SampleCount": 12.17,
+                    "Sum": 12.17,
+                    "Minimum": 12.17,
+                    "Maximum": 12.17
+                },
+                "Unit": "Seconds",
+                "StorageResolution": 12
+            }
+        ]
+    }

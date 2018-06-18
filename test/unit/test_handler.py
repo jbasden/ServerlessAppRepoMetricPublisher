@@ -72,11 +72,26 @@ def test_StorageResolution_type_invalid():
 
 def test_dimension_type_invalid():
     """Test to make sure the input type of 'Dimension' is valid"""
-    data = events.Dimension_type_invalid ()
+    data = events.Dimension_type_invalid()
     _assert_error_response(
         metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
     )
 
+def test_dimension_item_type_invalid():
+    """Test to make sure the input type of each item in
+    the 'Dimension' Array is valid."""
+    data = events.Dimension_item_type_invalid()
+    _assert_error_response(
+        metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
+    )
+
+def test_dimension_item_wrong_property():
+    """Test to make sure the input type of each item in
+    the 'Dimension' Array is valid."""
+    data = events.Dimension_item_wrong_property()
+    _assert_error_response(
+        metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
+    )
 
 def _assert_error_response(result, error_type):
     """Helper function to assert that the correct type of error was thrown"""
