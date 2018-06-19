@@ -6,66 +6,66 @@
         "dimension_item": {
             "type": "object",
             "properties": {
-                "Name": {
+                "name": {
                     "type": "string"
                 },
-                "Value": {
+                "value": {
                     "type": "string"
                 }
             },
             "required": [
-                "Name",
-                "Value"
+                "name",
+                "value"
             ]
         },
-        "Dimensions": {
+        "dimensions": {
             "type": "array",
             "items": {
                 "$ref": "#/definitions/dimension_item"
             }
         },
-        "StatisticValues": {
+        "statistic_values": {
             "type": "object",
             "properties": {
-                "SampleCount": {
+                "sample_count": {
                     "type": "number"
                 },
-                "Sum": {
+                "sum": {
                     "type": "number"
                 },
-                "Minimum": {
+                "minimum": {
                     "type": "number"
                 },
-                "Maximum": {
+                "maximum": {
                     "type": "number"
                 }
             },
             "required": [
-                "SampleCount",
-                "Sum",
-                "Minimum",
-                "Maximum"
+                "sample_count",
+                "sum",
+                "minimum",
+                "maximum"
             ]
         },
         "metric_datum": {
             "type": "object",
             "properties": {
-                "MetricName": {
+                "metric_name": {
                     "type": "string"
                 },
-                "Dimensions": {
-                    "$ref": "#/definitions/Dimensions"
+                "dimensions": {
+                    "$ref": "#/definitions/dimensions"
                 },
-                "Timestamp": {
+                "timestamp": {
                     "type": "number"
                 },
-                "Value": {
+                "value": {
                     "type": "number"
                 },
-                "StatisticValues": {
-                    "$ref": "#/definitions/StatisticValues"
+                "statistic_values": {
+                    "$ref": "#/definitions/statistic_values"
                 },
-                "Unit": {
+                "unit": {
                     "type": "string",
                     "enum": [
                         "Seconds",
@@ -97,31 +97,31 @@
                         "None"
                     ]
                 },
-                "StorageResolution": {
+                "storage_resolution": {
                     "type": "number"
                 }
             },
             "required": [
-                "MetricName"
+                "metric_name"
             ],
             "oneOf": [
                 {
                     "required": [
-                        "Value"
+                        "value"
                     ],
                     "not": {
                         "required": [
-                            "StatisticValues"
+                            "statistic_values"
                         ]
                     }
                 },
                 {
                     "required": [
-                        "StatisticValues"
+                        "statistic_values"
                     ],
                     "not": {
                         "required": [
-                            "Value"
+                            "value"
                         ]
                     }
                 }

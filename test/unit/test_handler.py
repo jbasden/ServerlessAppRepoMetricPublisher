@@ -20,16 +20,16 @@ def test_multiple_metrics_input():
     data = events.multiple_metrics_input()
     assert metricpublisher.schema._validate(data,"log_event.json") == None
 
-def test_Value_and_Statistic_Values_both_included():
-    """Test to assert that customer cannot pass in both 'Value' and
-    'StatisticValues' in the input. (They are mutually exclusive)."""
+def test_value_and_statistic_values_both_included():
+    """Test to assert that customer cannot pass in both 'value' and
+    'statistic_values' in the input. (They are mutually exclusive)."""
     data = events.value_and_statistic_values_both_included()
     _assert_error_response(
         metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
     )
 
 def test_missing_value_and_statistic_values():
-    """Test to make sure at least one of 'Value' or 'StatisticValues' is present"""
+    """Test to make sure at least one of 'value' or 'statistic_values' is present"""
     data = events.missing_value_and_statistic_values()
     _assert_error_response(
         metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
@@ -49,46 +49,46 @@ def test_missing_metric_name():
         metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
     )
 
-def test_StatisticValues_missing_Sum():
-    """Test to make sure that 'Sum' is present when 'StatisticValues' is"""
-    data = events.StatisticValues_missing_Sum()
+def test_statistic_values_missing_sum():
+    """Test to make sure that 'Sum' is present when 'statistic_values' is"""
+    data = events.statistic_values_missing_sum()
     _assert_error_response(
         metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
     )
 
-def test_Unit_type_not_available():
+def test_unit_type_not_available():
     """Test to make sure that customer must pass in a valid unit type"""
-    data = events.Unit_type_not_available()
+    data = events.unit_type_not_available()
     _assert_error_response(
         metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
     )
 
-def test_StorageResolution_type_invalid():
-    """Test to make sure the input type of 'StorageResolution' is valid"""
-    data = events.StorageResolution_type_invalid()
+def test_storage_resolution_type_invalid():
+    """Test to make sure the input type of 'storage_resolution' is valid"""
+    data = events.storage_resolution_type_invalid()
     _assert_error_response(
         metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
     )
 
 def test_dimension_type_invalid():
-    """Test to make sure the input type of 'Dimension' is valid"""
-    data = events.Dimension_type_invalid()
+    """Test to make sure the input type of 'dimension' is valid"""
+    data = events.dimension_type_invalid()
     _assert_error_response(
         metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
     )
 
 def test_dimension_item_type_invalid():
     """Test to make sure the input type of each item in
-    the 'Dimension' Array is valid."""
-    data = events.Dimension_item_type_invalid()
+    the 'dimension' Array is valid."""
+    data = events.dimension_item_type_invalid()
     _assert_error_response(
         metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
     )
 
 def test_dimension_item_wrong_property():
     """Test to make sure the input type of each item in
-    the 'Dimension' Array is valid."""
-    data = events.Dimension_item_wrong_property()
+    the 'dimension' Array is valid."""
+    data = events.dimension_item_wrong_property()
     _assert_error_response(
         metricpublisher.lambda_handler.log_event(data,None),"ValidationError"
     )
